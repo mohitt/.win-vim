@@ -96,3 +96,5 @@ set nomodeline
 " au FocusGained,BufEnter * :silent! !
 "set noerrorbells visualbell t_vb=
 " autocmd GUIEnter * set visualbell t_vb=
+set encoding=utf-8
+scriptencoding utf-8
