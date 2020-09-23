@@ -1,8 +1,31 @@
-cmd /c mklink C:\users\mohit.thakral\.vimrc C:\users\mohit.thakral\.win-vim\vimrc
+
+if(!(Test-Path -Path ~\.vimrc)) {
+	cmd /c mklink ~\.vimrc ~\.win-vim\vimrc
+}
+
+
+
+if(!(Test-Path -Path ~\.vim)) {
+    cd ~
+    mkdir .vim
+}
+
+if(!(Test-Path -Path ~\.vim\autoload)) {
+    cd ~\.vim
+    mkdir autoload
+}
+
 cd ~\.win-vim
-mkdir bkp
-mkdir swp
-mkdir autoload
+
+if(!(Test-Path -Path bkp)) {
+	mkdir bkp
+}
+
+if(!(Test-Path -Path swp)) {
+	mkdir swp
+}
+
+
 iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
-    ni $HOME/vimfiles/autoload/plug.vim -Force
+ni $HOME/vimfiles/autoload/plug.vim -Force
 vim +PlugUpdate +qa

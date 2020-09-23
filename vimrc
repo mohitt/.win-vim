@@ -1,37 +1,51 @@
-" A minimal vimrc for new vim users to start with.
+" https://github.com/MeirKriheli/dotvim
 "
-" Referenced here:
-" http://vimuniversity.com/samples/your-first-vimrc-should-be-nearly-empty
-"
-" Original Author:	     Bram Moolenaar <Bram@vim.org>
-" Made more minimal by:  Ben Orenstein
-" Modified by :          Ben McCormick
-" Last change:	         2014 June 8
-"
-" To use it, copy it to
-"  for Unix based systems (including OSX and Linux):  ~/.vimrc
-"  for Windows :  $VIM\_vimrc
-"
-"  If you don't understand a setting in here, just type ':h setting'.
+" ==================================================
+" Shortcuts Documented
+" ==================================================
+" jj - act as Esc in insert and command modes
+" <CTRL> + [hjkl] and Control + Arrow Keys -  window movement commands
+" <C-TAB> and <C-TAB> - Next or previous buffer
+" <leader>v - loads .vimrc
+" <leader>V - reloads .vimrec -- activating changes (needs save)
+" <leader>S - Remove trailing whitespace
+" <F4> - Toggle search highlight
+" - and + - Resize horizontal splits
+" <M>< and <M>< - Resize vertical splits
+" <F2> - Close current split (window)
+" <F3> - Toggle NERD tree
+" <F4> - Toggle search highlight
+" <F5> - Toggle Tagbar
+" <F9> - Toggle logical (RTL, e.g: Hebrew) editing
+" <F8> - Toggle visual (RTL, e.g: Hebrew) editing
 
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
+" ==================================================
+" Allow pre-definitions via ~/.win-vim/vimrc.before
+" ==================================================
+if filereadable(expand("~/.win-vim/vimrc.before"))
+    source ~/.win-vim/vimrc.before
+endif
 
-" Make backspace behave in a sane manner.
-set backspace=indent,eol,start
+" ==================================================
+" Source the files ~/.win-vim/vimrc.d/
+" ==================================================
+for f in split(glob('~/.win-vim/vimrc.d/*.vim'), '\n')
+    exe 'source' f
+endfor
 
-" Switch syntax highlighting on
-syntax on
+" ==================================================
+" Allow overrides via ~/.win-vim/vimrc.after
+" ==================================================
+if filereadable(expand("~/.win-vim/vimrc.after"))
+    source ~/.win-vim/vimrc.after
+endif
 
-" Enable file type detection and do language-dependent indenting.
-filetype plugin indent on
+" ==================================================
+" Allow overrides via ~/.win-vim/vimrc.local
+" ==================================================
+if filereadable(expand("~/.win-vim/vimrc.local"))
+    source ~/.win-vim/vimrc.local
+endif
 
-" Show line numbers
-set number
+autocmd Filetype json if getfsize(@%) > 10000 | setlocal syntax=OFF | endif
 
-" Show line numbers
-set relativenumber
-
-" Allow hidden buffers, don't limit to 1 file per window/split
-set hidden
